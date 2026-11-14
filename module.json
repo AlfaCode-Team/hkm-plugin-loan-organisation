@@ -1,0 +1,114 @@
+{
+    "name": "loan-organisation",
+    "version": "1.0.0",
+    "kernel": "^1.21.0",
+    "solves": "organisation.structure",
+    "type": "module",
+    "requires": [
+        "database.management",
+        "sync.offline"
+    ],
+    "exposes": [
+        "Plugins\\LoanOrganisation\\API\\Contracts\\OrganisationServiceContract",
+        "Plugins\\LoanOrganisation\\API\\Contracts\\StaffDirectoryContract"
+    ],
+    "routePrefix": "/api/organisation",
+    "routeFilters": [
+        "auth"
+    ],
+    "routes": [
+        {
+            "method": "GET",
+            "path": "/branches",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@index",
+            "name": "organisation.branches.index"
+        },
+        {
+            "method": "POST",
+            "path": "/branches",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@store",
+            "name": "organisation.branches.store"
+        },
+        {
+            "method": "GET",
+            "path": "/branches/{id:num}",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@show",
+            "name": "organisation.branches.show"
+        },
+        {
+            "method": "PUT",
+            "path": "/branches/{id:num}",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@update",
+            "name": "organisation.branches.update"
+        },
+        {
+            "method": "PUT",
+            "path": "/branches/{id:num}/manager",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@assignManager",
+            "name": "organisation.branches.manager"
+        },
+        {
+            "method": "GET",
+            "path": "/branches/{id:num}/hours",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@showHours",
+            "name": "organisation.branches.hours.show"
+        },
+        {
+            "method": "PUT",
+            "path": "/branches/{id:num}/hours",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\BranchController@setHours",
+            "name": "organisation.branches.hours.set"
+        },
+        {
+            "method": "GET",
+            "path": "/staff",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@index",
+            "name": "organisation.staff.index"
+        },
+        {
+            "method": "GET",
+            "path": "/staff/assignable",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@assignable",
+            "name": "organisation.staff.assignable"
+        },
+        {
+            "method": "POST",
+            "path": "/staff",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@store",
+            "name": "organisation.staff.store"
+        },
+        {
+            "method": "GET",
+            "path": "/staff/{id:num}",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@show",
+            "name": "organisation.staff.show"
+        },
+        {
+            "method": "PUT",
+            "path": "/staff/{id:num}",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@update",
+            "name": "organisation.staff.update"
+        },
+        {
+            "method": "POST",
+            "path": "/staff/{id:num}/ban",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@ban",
+            "name": "organisation.staff.ban"
+        },
+        {
+            "method": "POST",
+            "path": "/staff/{id:num}/reinstate",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@reinstate",
+            "name": "organisation.staff.reinstate"
+        },
+        {
+            "method": "PUT",
+            "path": "/staff/{id:num}/branch",
+            "handler": "Plugins\\LoanOrganisation\\Infrastructure\\Http\\Controllers\\StaffController@assignBranch",
+            "name": "organisation.staff.branch"
+        }
+    ],
+    "emits": [],
+    "documentation": "Branches, the staff posted to them, and the hours each branch keeps. Owns branches, staff_members and business_hours in the tenant template. Every write takes a new sync rev in the same transaction; banning removes a person from assignment but keeps their row readable for historical records.",
+    "config": []
+}
